@@ -1,7 +1,6 @@
 require 'oystercard'
 require 'pry'
 require 'station'
-# testing github
 
 describe Oystercard do
   let(:station) { double :station }
@@ -31,7 +30,7 @@ describe Oystercard do
   end
 
   it 'can touch out at the end of a journey' do
-    expect(subject.touch_out).to eq(nil)
+    expect(subject.touch_out(station)).to eq(nil)
   end
 
   it 'knows when the user is in transit' do
@@ -47,7 +46,7 @@ describe Oystercard do
   it 'charges the user £1 on touching out' do
     subject.topup(10)
     subject.touch_in(station)
-    expect { subject.touch_out }.to change { subject.balance }.by(-Oystercard::MINIMUM_FARE)
+    expect { subject.touch_out(station) }.to change { subject.balance }.by(-Oystercard::MINIMUM_FARE)
   end
 
   it 'keeps a record of the starting station' do
@@ -59,8 +58,19 @@ describe Oystercard do
   it 'forgets entry station on touch out' do
     subject.topup(10)
     subject.touch_in(station)
-    subject.touch_out
+    subject.touch_out(station)
     expect(subject.start_station).to be_nil
+  end
+
+  it 'has no journeys stored before entering' do
+    expect(subject.journeys).to be_empty
+  end
+
+  it 'records journeys' do
+    subject.topup(10)
+    subject.touch_in(station)
+    subject.touch_out(station)
+    expect(subject.journeys).to include ({entry: station, exit: station})
   end
 
 end
