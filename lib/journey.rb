@@ -1,13 +1,11 @@
+require_relative 'oystercard'
+
 class Journey
-  def initialize(entry, exit)
-    @entry = entry
-    @exit = exit
+  attr_reader :entry, :exit
+
+  def initialize(entry_station, exit_station)
+    @entry = entry_station
+    @exit = exit_station
   end
 
-  def entry(station)
-
-  end
-
-  def exit(station)
-  end
 end
