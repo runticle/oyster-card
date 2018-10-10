@@ -1,4 +1,5 @@
 require 'pry'
+require_relative 'station'
 
 class Oystercard
 
@@ -7,6 +8,7 @@ class Oystercard
   MINIMUM_BALANCE = 1
   MAXIMUM_BALANCE = 90
   MINIMUM_FARE = 1
+  PENALTY_FARE = 6
 
   def initialize
     @balance = 0
@@ -19,14 +21,14 @@ class Oystercard
   end
 
   def touch_in(station)
+    penalty if in_journey?
     raise 'Insufficient funds' if @balance < MINIMUM_BALANCE
     @start_station = station
   end
 
   def touch_out(station)
-    deduct(MINIMUM_FARE)
     @end_station = station
-    record_journey
+    record_journey && fare
     @start_station = nil
   end
 
@@ -39,6 +41,14 @@ class Oystercard
   end
 
   private
+
+  def fare
+    in_journey? ? deduct(MINIMUM_FARE) : penalty
+  end
+
+  def penalty
+    deduct(PENALTY_FARE)
+  end
 
   def deduct(amount)
     @balance -= amount

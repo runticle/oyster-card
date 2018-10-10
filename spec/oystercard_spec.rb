@@ -30,7 +30,8 @@ describe Oystercard do
   end
 
   it 'can touch out at the end of a journey' do
-    expect(subject.touch_out(station)).to eq(nil)
+    subject.touch_out(station)
+    expect(subject.in_journey?).to eq nil
   end
 
   it 'knows when the user is in transit' do
@@ -71,6 +72,26 @@ describe Oystercard do
     subject.touch_in(station)
     subject.touch_out(station)
     expect(subject.journeys).to include ({entry: station, exit: station})
+  end
+
+  it 'charges a penalty for multiple entries without exit' do
+    subject.topup(10)
+    station1 = Station.new("Borough", "1")
+    subject.touch_in(station1)
+    station2 = Station.new("Wimbledon", "3")
+    subject.touch_in(station2)
+    expect(subject.balance).to eq 4
+  end
+
+  it 'charges a penalty for multiple exits without entry' do
+    subject.topup(10)
+    station = Station.new("Shoreditch High Street", '1')
+    subject.touch_in(station)
+    station1 = Station.new("Borough", "1")
+    subject.touch_out(station1)
+    station2 = Station.new("Wimbledon", "3")
+    subject.touch_out(station2)
+    expect(subject.balance).to eq 3
   end
 
 end
