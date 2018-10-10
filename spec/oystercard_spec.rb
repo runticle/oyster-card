@@ -1,6 +1,7 @@
 require 'oystercard'
 require 'pry'
 require 'station'
+require 'journey'
 
 describe Oystercard do
   let(:station) { double :station }
