@@ -2,6 +2,7 @@ require 'oystercard'
 require 'pry'
 require 'station'
 require 'journey'
+require 'journey_log'
 
 describe Oystercard do
   let(:station) { double :station }
@@ -64,16 +65,16 @@ describe Oystercard do
     expect(subject.start_station).to be_nil
   end
 
-  it 'has no journeys stored before entering' do
-    expect(subject.journeys).to be_empty
-  end
+  # it 'has no journeys stored before entering' do
+  #   expect(subject.journeys).to be_empty
+  # end
 
-  it 'records journeys' do
-    subject.topup(10)
-    subject.touch_in(station)
-    subject.touch_out(station)
-    expect(subject.journeys).to include ({entry: station, exit: station})
-  end
+  # it 'records journeys' do
+  #   subject.topup(10)
+  #   subject.touch_in(station)
+  #   subject.touch_out(station)
+  #   expect(subject.journeys).to include ({entry: station, exit: station})
+  # end
 
   it 'charges a penalty for multiple entries without exit' do
     subject.topup(10)
@@ -86,12 +87,9 @@ describe Oystercard do
 
   it 'charges a penalty for multiple exits without entry' do
     subject.topup(10)
-    station = Station.new("Shoreditch High Street", '1')
     subject.touch_in(station)
-    station1 = Station.new("Borough", "1")
-    subject.touch_out(station1)
-    station2 = Station.new("Wimbledon", "3")
-    subject.touch_out(station2)
+    subject.touch_out(station)
+    subject.touch_out(station)
     expect(subject.balance).to eq 3
   end
 

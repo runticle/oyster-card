@@ -1,5 +1,7 @@
 require 'pry'
 require_relative 'station'
+require_relative 'journey_log'
+require_relative 'journey'
 
 class Oystercard
 
@@ -12,7 +14,7 @@ class Oystercard
 
   def initialize
     @balance = 0
-    @journeys = []
+    @history = JourneyLog.new
   end
 
   def topup(amount)
@@ -23,18 +25,18 @@ class Oystercard
   def touch_in(station)
     penalty if in_journey?
     raise 'Insufficient funds' if @balance < MINIMUM_BALANCE
+    @history.start(station)
     @start_station = station
+
   end
 
   def touch_out(station)
     @end_station = station
-    record_journey && fare
+    fare
     @start_station = nil
+    @history.finish(station)
   end
 
-  def record_journey
-    @journeys << {entry: start_station, exit: end_station}
-  end
 
   def in_journey?
     true if @start_station != nil
