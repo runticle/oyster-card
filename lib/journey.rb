@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'oystercard'
 
 class Journey
@@ -7,5 +9,4 @@ class Journey
     @entry = nil
     @exit = nil
   end
-
 end

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'journey_log'
 require 'pry'
 
 describe JourneyLog do
-  let (:station) { double :station }
-  let (:station2) { double :station }
+  let(:station) { double :station }
+  let(:station2) { double :station }
   it 'starts a journey and sets the entry station' do
     subject.start(station)
     expect(subject.current_journey.entry).to eq station

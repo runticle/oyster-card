@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Station
   attr_reader :name, :zone
 
@@ -5,5 +7,4 @@ class Station
     @name = name
     @zone = zone
   end
-
 end

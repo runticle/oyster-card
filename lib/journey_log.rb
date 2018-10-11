@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require_relative 'oystercard'
 
 class JourneyLog
-
-attr_reader :current_journey, :logged_journies
+  attr_reader :current_journey, :logged_journies
   def initialize
     @current_journey = Journey.new
     @logged_journies = []
