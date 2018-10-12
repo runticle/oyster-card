@@ -15,11 +15,12 @@ class Oystercard
   def initialize
     @balance = 0
     @history = JourneyLog.new
-    @entry_station
   end
 
   def topup(amount)
-    raise "Cannot topup £#{amount}: maximum balance of £#{MAXIMUM_BALANCE}" if (MAXIMUM_BALANCE - @balance) < amount
+    msg = "Cannot topup £#{amount}: maximum balance of £#{MAXIMUM_BALANCE}"
+    raise msg if (MAXIMUM_BALANCE - @balance) < amount
+
     @balance += amount
   end
 
@@ -27,12 +28,14 @@ class Oystercard
     @entry_station = station
     check_last
     raise 'Insufficient funds' if @balance < MINIMUM_BALANCE
+
     @history.start(station)
   end
 
   def touch_out(station)
     @history.finish(station)
     deduct(@history.logged_journies.last.fare)
+    @entry_station = nil
   end
 
   def in_journey?
@@ -40,15 +43,15 @@ class Oystercard
   end
 
   def list_history
-    list = @history.logged_journies.map {|trip|
-    "#{trip.entry_station.name} to #{trip.exit_station.name}"
-    }
+    @history.logged_journies.map do |trip|
+      "#{trip.entry_station.name} to #{trip.exit_station.name}"
+    end
   end
 
   private
 
   def check_last
-    if !@history.logged_journies.last.nil?
+    unless @history.logged_journies.last.nil?
       deduct(PENALTY_FARE) if @history.logged_journies.last.exit_station.nil?
     end
   end
