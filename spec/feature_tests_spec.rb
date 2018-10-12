@@ -21,14 +21,13 @@ describe Oystercard do
       subject.touch_out(station3)
       expect(subject.balance).to eq 3
     end
+    it 'shows the card history' do
+      subject.topup(10)
+      subject.touch_in(station1)
+      subject.touch_out(station2)
+      subject.touch_in(station2)
+      subject.touch_out(station3)
+      expect(subject.list_history).to eq ["Borough to Wimbledon", "Wimbledon to London Bridge"]
+    end
   end
 end
-
-# it 'shows the card history' do
-#   subject.topup(10)
-#   station1 = Station.new('Borough', 1)
-#   subject.touch_in(station1)
-#   station2 = Station.new('Wimbledon', 3)
-#   subject.touch_out(station2)
-#   expect(subject.history.logged_journies[0].entry).to eq station1
-# end

@@ -39,6 +39,12 @@ class Oystercard
     true unless @entry_station.nil?
   end
 
+  def list_history
+    list = @history.logged_journies.map {|trip|
+    "#{trip.entry_station.name} to #{trip.exit_station.name}"
+    }
+  end
+
   private
 
   def check_last
