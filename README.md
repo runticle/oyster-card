@@ -35,3 +35,8 @@ Check balance
 ```
 card.balance
 ```
+
+A ticket inspector can check if you touched in with
+```
+card.in_journey?
+```
