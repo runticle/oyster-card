@@ -27,7 +27,6 @@ class Oystercard
   def touch_in(station)
     penalty if in_journey?
     raise 'Insufficient funds' if @balance < MINIMUM_BALANCE
-
     @history.start(station)
     @start_station = station
   end
