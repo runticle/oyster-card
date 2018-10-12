@@ -25,21 +25,11 @@ describe Oystercard do
     expect { subject.topup(91) }.to raise_error "#{msg}#{max_bal}"
   end
 
-  # it 'can touch in at the beginning of a journey' do
-  #   subject.topup(10)
-  #   expect(subject.touch_in(station)).to eq(station)
-  # end
-  #
-  # it 'can touch out at the end of a journey' do
-  #   subject.touch_out(station)
-  #   expect(subject.in_journey?).to eq nil
-  # end
-
-  # it 'knows when the user is in transit' do
-  #   subject.topup(10)
-  #   subject.touch_in(station)
-  #   expect(subject).to be_in_journey
-  # end
+  it 'knows when the user is in transit' do
+    subject.topup(10)
+    subject.touch_in(station)
+    expect(subject).to be_in_journey
+  end
 
   it 'does not allow user to touch in if balance is below minimum' do
     expect { subject.touch_in(station) }.to raise_error 'Insufficient funds'

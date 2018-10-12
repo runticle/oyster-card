@@ -20,10 +20,6 @@ class Journey
     illegal_journey? ? PENALTY_FARE : journey_fare
   end
 
-  def in_journey?
-    true unless @entry_station.nil?
-  end
-
   def illegal_journey?
     true if @entry_station.nil? || @exit_station.nil?
   end

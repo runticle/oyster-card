@@ -28,5 +28,7 @@ describe Journey do
       subject.exit_station = exit_station
       expect(subject.fare).to eq Journey::PENALTY_FARE
     end
+    it "should charge a penalty fare if touch in twice" do
+    end
   end
 end
