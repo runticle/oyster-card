@@ -13,15 +13,19 @@ class Journey
   end
 
   def journey_fare
-      (@exit_station.zone - @entry_station.zone).abs + 1
+      (@exit_station.zone - @entry_station.zone).abs + MINIMUM_FARE
   end
 
   def fare
-    in_journey? ? journey_fare : PENALTY_FARE
+    illegal_journey? ? PENALTY_FARE : journey_fare
   end
 
   def in_journey?
     true unless @entry_station.nil?
+  end
+
+  def illegal_journey?
+    true if @entry_station.nil? || @exit_station.nil?
   end
 
 end
