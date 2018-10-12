@@ -3,9 +3,10 @@
 require 'journey'
 require 'station'
 require 'oystercard'
+require 'pry'
 
 describe Journey do
   it 'initially has no entry or exit stations' do
-    expect(subject.entry).to eq nil
+    expect(subject.entry_station).to eq nil
   end
 end
