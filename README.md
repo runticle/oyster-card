@@ -1,13 +1,14 @@
 ### Oystercard ###
 
+This is a simplified oystercard program. The user can create new cards and stations; can touch in and out at various stations and be charged accordingly. If the user forgets to tap in or out, they will be fined a penalty charge!
 
 ## How to use
 
 
-Require oystercard.rb file in irb
-create an Oystercard
+Require oystercard.rb file in irb and create an Oystercard
 
 ```
+require './lib/oystercard'
 card = Oystercard.new
 ```
 
