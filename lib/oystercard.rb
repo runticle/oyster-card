@@ -44,7 +44,9 @@ class Oystercard
 
   def list_history
     @history.logged_journies.map do |trip|
-      "#{trip.entry_station.name} to #{trip.exit_station.name}"
+      trip.entry_station.nil? ? x = "N/A" : x = trip.entry_station.name
+      trip.exit_station.nil? ? y = "N/A" : y = trip.exit_station.name
+      "#{x} to #{y}"
     end
   end
 
